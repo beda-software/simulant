@@ -3,11 +3,12 @@ import json
 
 
 def prepare_args(args):
-    return hash(json.dump(args, sort_keys=True))
+    return hash(json.dumps(args, sort_keys=True))
 
 
 class Simulant:
-    def __init__(self):
+    def __init__(self, async_mode=True):
+        self.async_mode = async_mode
         self.state = {}
 
     def load(self, state):
@@ -17,7 +18,7 @@ class Simulant:
         """
         self.state = {}
         for fn, results in state.items():
-            self.state[fn] = {prepare_args(args): body for args, body in results.trems()}
+            self.state[fn] = {prepare_args(args): body for args, body in results.items()}
 
     def __getattr__(self, attr):
         if attr not in self.state:
@@ -25,8 +26,10 @@ class Simulant:
 
         results = self.state[attr]
 
-        async def _call(args):
+        def _call(args):
             body = results[prepare_args(args)]
+            if not self.async_mode:
+                return body
             response = asyncio.Future()
             response.set_result(body)
             return response
