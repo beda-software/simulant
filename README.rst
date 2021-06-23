@@ -6,12 +6,8 @@ Simulant
 .. image:: https://img.shields.io/pypi/v/simulant.svg
         :target: https://pypi.org/project/simulant
 
-.. image:: https://img.shields.io/travis/ir4y/simulant.svg
-        :target: https://travis-ci.org/ir4y/simulant
-
-.. image:: https://readthedocs.org/projects/simulant/badge/?version=latest
-        :target: https://simulant.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
+.. image:: https://img.shields.io/travis/beda-software/simulant.svg
+        :target: https://travis-ci.org/beda-software/simulant
 
 
 .. image:: https://pyup.io/repos/github/ir4y/simulant/shield.svg
