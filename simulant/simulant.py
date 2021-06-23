@@ -12,17 +12,15 @@ class Simulant:
         self.state = {}
 
     def load(self, state):
-        """
-        {'load_contact': {'5901': {'email': 'foo'}},
-        'search_contact': {{'email': 'ilya@beda.software'}: {"result": []} }}
-        """
         self.state = {}
         for fn, results in state.items():
-            self.state[fn] = {prepare_args(args): body for args, body in results.items()}
+            self.state[fn] = {
+                prepare_args(result["args"]): result["response"] for result in results
+            }
 
     def __getattr__(self, attr):
         if attr not in self.state:
-            return super(Simulant, self).__getitem__(attr)
+            raise AttributeError()
 
         results = self.state[attr]
 
