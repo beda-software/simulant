@@ -1,5 +1,6 @@
 import asyncio
 import json
+import logging
 
 
 def prepare_args(args):
@@ -25,9 +26,15 @@ class Simulant:
         results = self.state[attr]
 
         def _call(args):
-            body = results[prepare_args(args)]
+            key = prepare_args(args)
+            body = None
+            if key in results:
+                body = results[key]
+            else:
+                logging.warning("Missing key %s", args)
             if not self.async_mode:
                 return body
+
             response = asyncio.Future()
             response.set_result(body)
             return response
